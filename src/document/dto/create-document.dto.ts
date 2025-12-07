@@ -4,6 +4,7 @@ import {
   IsString,
   IsEnum,
   IsNumber,
+  ValidateIf,
 } from 'class-validator';
 import { DocumentType } from '../types/document-type.enum';
 
@@ -20,7 +21,8 @@ export class CreateDocumentDto {
   @IsNumber()
   parentId?: number;
 
-  @IsOptional()
+  @ValidateIf((o) => o.type === DocumentType.FILE)
+  @IsNotEmpty()
   @IsNumber()
   fileSize?: number;
 }
